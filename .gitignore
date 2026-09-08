@@ -1,3 +1,7 @@
 node_modules/
 .env
 dist/
+
+# Claude Code local tooling
+.claude/
+.claudeignore
