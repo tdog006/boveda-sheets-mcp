@@ -62,7 +62,13 @@ mcpProcess.stdout.on('data', (data) => {
 });
 
 // HTTP server
-const server = http.createServer((req, res) => {
+const server = http.createServer((req, res) => {   
+     // Health check endpoint (no auth required)
+    if (req.method === 'GET' && req.url === '/health') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ status: 'ok', transport: 'stdio-proxy' }));
+        return;
+    }
     // Auth check
     const authHeader = req.headers['authorization'] || '';
     if (authHeader !== `Bearer ${API_KEY}`) {
